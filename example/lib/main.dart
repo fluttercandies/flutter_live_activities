@@ -30,7 +30,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final FlutterLiveActivities _liveActivitiesPlugin = FlutterLiveActivities();
   String? _latestActivityId;
-  bool? _hasPermission;
+  bool? _enabled;
 
   StreamSubscription<String?>? _subscription;
 
@@ -72,8 +72,8 @@ class _HomeState extends State<Home> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  _hasPermission = await _liveActivitiesPlugin.areActivitiesEnabled();
-                  if (_hasPermission == true) {
+                  _enabled = await _liveActivitiesPlugin.areActivitiesEnabled();
+                  if (_enabled == true) {
                     _subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
                       dev.log('deeplink uri: $uri');
                       if (uri != null) _setInfo(uri);
@@ -81,30 +81,30 @@ class _HomeState extends State<Home> {
                   }
                   setState(() {});
                 },
-                child: Text('Has permission: $_hasPermission'),
+                child: Text('Enabled: $_enabled'),
               ),
-              if (_hasPermission == true)
+              if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
                     _setInfo((await _liveActivitiesPlugin.getAllActivities()).toString());
                   },
                   child: const Text('getAllActivities'),
                 ),
-              if (_hasPermission == true)
+              if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
                     await _liveActivitiesPlugin.endAllActivities();
                   },
                   child: const Text('endAllActivities'),
                 ),
-              if (_hasPermission == true)
+              if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
                     _setInfo((await _liveActivitiesPlugin.getInitUri()).toString());
                   },
                   child: const Text('getInitUri'),
                 ),
-              if (_hasPermission == true && _latestActivityId == null)
+              if (_enabled == true && _latestActivityId == null)
                 ElevatedButton(
                   onPressed: () async {
                     _latestActivityId =
@@ -130,6 +130,7 @@ class _HomeState extends State<Home> {
                   onPressed: () {
                     _liveActivitiesPlugin.endActivity(_latestActivityId!);
                     _latestActivityId = null;
+                    _info = '';
                     setState(() {});
                   },
                   child: Text(
