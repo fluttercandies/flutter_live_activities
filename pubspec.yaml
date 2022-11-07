@@ -1,5 +1,5 @@
 name: flutter_live_activities
-description: Flutter plugin for Live Activities, Use it to create [DynamicIsland UI] and [Lock screen/banner UI],then update them and handle the click action 
+description: Flutter plugin for Live Activities, Use it to create [DynamicIsland UI] and [Lock screen/banner UI], then update them and handle the click action 
 version: 0.0.3
 homepage: https://github.com/fluttercandies/flutter_live_activities
 
