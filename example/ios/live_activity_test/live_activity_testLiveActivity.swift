@@ -59,7 +59,7 @@ struct live_activity_testLiveActivity: Widget {
                     Text("Trailing")
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {
+                    Link(destination: URL(string: "FLA://xx.xx/tap/HelloWorld")!) {
                         Text(data?.text ?? "")
                             .background(.red)
                     }
@@ -72,7 +72,7 @@ struct live_activity_testLiveActivity: Widget {
             } minimal: {
                 Text("Min")
             }
-            .widgetURL(URL(string: "FLA://www.apple.com"))
+            .widgetURL(URL(string: "FLA://xx.xx/tap/DynamicIsland"))
             .keylineTint(Color.red)
         }
     }
