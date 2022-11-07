@@ -1,5 +1,10 @@
 # Flutter Live Activities
 
+[![pub package](https://img.shields.io/pub/v/flutter_live_activities?logo=dart&label=stable&style=flat-square)](https://pub.dev/packages/flutter_live_activities)
+[![GitHub stars](https://img.shields.io/github/stars/fluttercandies/flutter_live_activities?logo=github&style=flat-square)](https://github.com/fluttercandies/flutter_live_activities/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/fluttercandies/flutter_live_activities?logo=github&style=flat-square)](https://github.com/fluttercandies/flutter_live_activities/network/members)
+<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5bcc0gy"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="FlutterCandies" title="FlutterCandies"></a>
+
 #### 1. Add a Widget to the iOS project
 <br/>
 
@@ -173,4 +178,51 @@ await _liveActivitiesPlugin.getAllActivities()
 
 #### 5. Deeplink
 
-* the default urlScheme is `FLA`
+* The default urlScheme is `FLA`
+
+* Edit urlScheme in your project
+
+<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/url.png" height=300>
+
+* Swift code:
+
+```swift
+@available(iOSApplicationExtension 16.1, *)
+struct live_activity_testLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: FlutterLiveActivities.self) { context in
+            ...
+        } dynamicIsland: { context in
+
+            let data = TestData(JSONData: context.state.data)
+
+            return DynamicIsland {
+                ...
+                DynamicIslandExpandedRegion(.bottom) {
+                    // Create an action via `Link`
+                    Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {
+                        Text(data?.text ?? "")
+                            .background(.red)
+                    }
+                }
+            } compactLeading: {
+                Text("L")
+            } compactTrailing: {
+                Text("T")
+            } minimal: {
+                Text("Min")
+            }
+            .widgetURL(URL(string: "FLA://www.apple.com")) // or use widgetURL
+            .keylineTint(Color.red)
+        }
+    }
+}
+```
+
+* Dart code:
+
+```dart
+_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'FLA').listen((String? uri) {
+    dev.log('deeplink uri: $uri');
+});
+```
