@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/live_activities.png" height=100>
+
 # Flutter Live Activities
 
 [![pub package](https://img.shields.io/pub/v/flutter_live_activities?logo=dart&label=stable&style=flat-square)](https://pub.dev/packages/flutter_live_activities)
