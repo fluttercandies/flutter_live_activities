@@ -8,7 +8,7 @@
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5bcc0gy"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="FlutterCandies" title="FlutterCandies"></a>
 
 #### 1. Add a Widget to the iOS project
-<br/>
+
 
 <img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/new.png" height=400>
 
@@ -18,15 +18,9 @@
 
 * Directory structure
 
-<br/>
-
 <img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/finish.png" height=300>
 
-<br/>
-
 #### 2. Edit `Runner/Info.plist` and `live_activity_test/Info.plist`
-
-<br/>
 
 both add:
 ```xml
@@ -43,8 +37,6 @@ both add:
 #### 3. Create a data channel in widget swift file
 
 [live_activity_test/live_activity_testLiveActivity.swift](https://github.com/fluttercandies/flutter_live_activities/blob/main/example/ios/live_activity_test/live_activity_testLiveActivity.swift)
-
-<br/>
 
 ```swift
 import ActivityKit
@@ -175,8 +167,6 @@ await _liveActivitiesPlugin.endAllActivities();
 ```dart
 await _liveActivitiesPlugin.getAllActivities()
 ```
-
-<br/>
 
 #### 5. Deeplink
 
