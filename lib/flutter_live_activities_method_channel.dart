@@ -49,8 +49,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   }
 
   @override
-  Future<void> endAllActivity(String liveId) {
-    return _methodChannel.invokeMethod('endAllActivity');
+  Future<void> endAllActivities() {
+    return _methodChannel.invokeMethod('endAllActivities');
   }
 
   @override
@@ -63,7 +63,7 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   }
 
   @override
-  Stream<String?> uriStream({String appLink = 'FLA'}) {
-    return _eventChannel.receiveBroadcastStream(appLink).map((dynamic eve) => eve?.toString());
+  Stream<String?> uriStream({String urlScheme = 'FLA'}) {
+    return _eventChannel.receiveBroadcastStream(urlScheme).map((dynamic eve) => eve?.toString());
   }
 }

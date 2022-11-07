@@ -9,9 +9,7 @@
 
 <img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/config.png" height=300> 
 
-<br/>
-
-##### Directory structure
+* Directory structure
 
 <br/>
 
@@ -24,7 +22,7 @@
 <br/>
 
 both add:
-```plist
+```xml
 <plist version="1.0">
 <dict>
     ...
@@ -36,6 +34,8 @@ both add:
 ```
 
 #### 3. Create a data channel in widget swift file
+
+[live_activity_test/live_activity_testLiveActivity.swift](https://github.com/fluttercandies/flutter_live_activities/blob/main/example/ios/live_activity_test/live_activity_testLiveActivity.swift)
 
 <br/>
 
@@ -120,4 +120,57 @@ For more layout information, please refer to: [live activities](https://develope
 
 #### 4. APIs
 
+```dart
+import 'package:flutter_live_activities/flutter_live_activities.dart';
+
+...
+
+final FlutterLiveActivities _liveActivitiesPlugin = FlutterLiveActivities();
+
+String? _latestActivityId;
+```
+
+* Check if the liveActivities function is enabled
+```dart
+await _liveActivitiesPlugin.areActivitiesEnabled();
+```
+
+* Get launch url
+```dart
+await _liveActivitiesPlugin.getInitUri()
+```
+
+* Create a live activity
+```dart
+_latestActivityId = await _liveActivitiesPlugin.createActivity(<String, String>{'text': 'Hello World'});
+```
+
+* Update a live activity
+```dart
+if(_latestActivityId != null) {
+    await _liveActivitiesPlugin.updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
+}
+```
+
+* End a live activity
+```dart
+if(_latestActivityId != null) {
+    await _liveActivitiesPlugin.endActivity(_latestActivityId!);
+}
+```
+
+* End all live activities
+```dart
+await _liveActivitiesPlugin.endAllActivities();
+```
+
+* Get all live activities id
+```dart
+await _liveActivitiesPlugin.getAllActivities()
+```
+
 <br/>
+
+#### 5. Deeplink
+
+* the default urlScheme is `FLA`

@@ -33,13 +33,19 @@ class FlutterLiveActivities {
     return FlutterLiveActivitiesPlatform.instance.endActivity(liveId);
   }
 
+  /// End an iOS 16.1+ live activity.
+  /// You can get an activity id by calling [createActivity].
+  Future<void> endAllActivities() {
+    return FlutterLiveActivitiesPlatform.instance.endAllActivities();
+  }
+
   /// Check if iOS 16.1+ live activities are enabled.
   /// If they are not enabled, you will not be able to create activities.
   Future<bool> areActivitiesEnabled() {
     return FlutterLiveActivitiesPlatform.instance.areActivitiesEnabled();
   }
 
-  Stream<String?> uriStream({String appLink = 'FLA'}) {
-    return FlutterLiveActivitiesPlatform.instance.uriStream(appLink: appLink);
+  Stream<String?> uriStream({String urlScheme = 'FLA'}) {
+    return FlutterLiveActivitiesPlatform.instance.uriStream(urlScheme: urlScheme);
   }
 }

@@ -80,6 +80,13 @@ class _HomeState extends State<Home> {
               if (_hasPermission == true)
                 ElevatedButton(
                   onPressed: () async {
+                    await _liveActivitiesPlugin.endAllActivities();
+                  },
+                  child: const Text('endAllActivities'),
+                ),
+              if (_hasPermission == true)
+                ElevatedButton(
+                  onPressed: () async {
                     dev.log((await _liveActivitiesPlugin.getInitUri()).toString());
                   },
                   child: const Text('getInitUri'),
@@ -97,7 +104,8 @@ class _HomeState extends State<Home> {
               if (_latestActivityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivitiesPlugin.updateActivity(_latestActivityId!, <String, String>{'text': 'Hello World'});
+                    _liveActivitiesPlugin
+                        .updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
                   },
                   child: Text(
                     'Update live activity $_latestActivityId',

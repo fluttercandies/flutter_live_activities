@@ -43,7 +43,7 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
     throw UnimplementedError('endActivity() has not been implemented.');
   }
 
-  Future<void> endAllActivity(String liveId) {
+  Future<void> endAllActivities() {
     throw UnimplementedError('endAllActivity() has not been implemented.');
   }
 
@@ -51,7 +51,7 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
     throw UnimplementedError('areActivitiesEnabled() has not been implemented.');
   }
 
-  Stream<String?> uriStream({String appLink = 'FLA'}) {
+  Stream<String?> uriStream({String urlScheme = 'FLA'}) {
     throw UnimplementedError('uriStream() has not been implemented.');
   }
 }
