@@ -60,9 +60,11 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
-                  _hasPermission = await _liveActivitiesPlugin.areActivitiesEnabled();
+                  _hasPermission =
+                      await _liveActivitiesPlugin.areActivitiesEnabled();
                   if (_hasPermission == true) {
-                    _subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
+                    _subscription ??=
+                        _liveActivitiesPlugin.uriStream().listen((String? uri) {
                       dev.log('deeplink uri: $uri');
                     });
                   }
@@ -73,7 +75,8 @@ class _HomeState extends State<Home> {
               if (_hasPermission == true)
                 ElevatedButton(
                   onPressed: () async {
-                    dev.log((await _liveActivitiesPlugin.getAllActivities()).toString());
+                    dev.log((await _liveActivitiesPlugin.getAllActivities())
+                        .toString());
                   },
                   child: const Text('getAllActivities'),
                 ),
@@ -87,15 +90,17 @@ class _HomeState extends State<Home> {
               if (_hasPermission == true)
                 ElevatedButton(
                   onPressed: () async {
-                    dev.log((await _liveActivitiesPlugin.getInitUri()).toString());
+                    dev.log(
+                        (await _liveActivitiesPlugin.getInitUri()).toString());
                   },
                   child: const Text('getInitUri'),
                 ),
               if (_hasPermission == true && _latestActivityId == null)
                 ElevatedButton(
                   onPressed: () async {
-                    _latestActivityId =
-                        await _liveActivitiesPlugin.createActivity(<String, String>{'text': 'Hello World'});
+                    _latestActivityId = await _liveActivitiesPlugin
+                        .createActivity(
+                            <String, String>{'text': 'Hello World'});
 
                     setState(() {});
                   },
@@ -104,8 +109,8 @@ class _HomeState extends State<Home> {
               if (_latestActivityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivitiesPlugin
-                        .updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
+                    _liveActivitiesPlugin.updateActivity(_latestActivityId!,
+                        <String, String>{'text': 'Update Hello World'});
                   },
                   child: Text(
                     'Update live activity $_latestActivityId',

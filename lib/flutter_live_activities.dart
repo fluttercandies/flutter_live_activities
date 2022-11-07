@@ -46,6 +46,7 @@ class FlutterLiveActivities {
   }
 
   Stream<String?> uriStream({String urlScheme = 'FLA'}) {
-    return FlutterLiveActivitiesPlatform.instance.uriStream(urlScheme: urlScheme);
+    return FlutterLiveActivitiesPlatform.instance
+        .uriStream(urlScheme: urlScheme);
   }
 }
