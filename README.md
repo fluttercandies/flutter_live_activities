@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/live_activities.png" height=100>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/live_activities.png" height=100>
 
 # Flutter Live Activities
 
@@ -13,20 +13,20 @@ English | [中文说明](README-ZH.md)
 
 > This plugin requires notification permission
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/pre.gif" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" height=400>
 
 #### 1. Add a Widget to the iOS project
 
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/new.png" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/new.png" height=400>
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/we.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/we.png" height=300>
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/config.png" height=300> 
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/config.png" height=300> 
 
 * Directory structure
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/finish.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=300>
 
 #### 2. Edit `Runner/Info.plist` and `live_activity_test/Info.plist`
 
@@ -182,7 +182,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 * Add urlScheme in your project
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/url.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/url.png" height=300>
 
 * Swift code:
 
