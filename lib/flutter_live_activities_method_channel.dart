@@ -64,9 +64,6 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
 
   @override
   Stream<String?> uriStream({String urlScheme = 'FLA'}) {
-    return _eventChannel
-        .receiveBroadcastStream(urlScheme)
-        .map((dynamic eve) => eve?.toString())
-        .skipWhile((String? scheme) => scheme != urlScheme);
+    return _eventChannel.receiveBroadcastStream(urlScheme).map((dynamic eve) => eve?.toString());
   }
 }

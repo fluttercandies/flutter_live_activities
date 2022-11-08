@@ -4,7 +4,7 @@ import UIKit
 
 public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     private var eventSink: FlutterEventSink?
-    private var urlSchemeList: [String] = []
+    private var urlScheme: String?
     
     private var initialUrl: URL?
     private var latestUrl: URL? {
@@ -147,9 +147,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
-        if arguments != nil {
-            urlSchemeList.append(arguments as! String)
-        }
+        urlScheme = arguments as? String
         return nil
     }
      
@@ -158,11 +156,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
             eventSink!(FlutterEndOfEventStream)
         }
         eventSink = nil
-        if arguments != nil {
-            if let index = urlSchemeList.firstIndex(of: arguments as! String) {
-                urlSchemeList.remove(at: index)
-            }
-        }
+        urlScheme = nil
        
         return nil
     }
@@ -191,7 +185,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         if components?.scheme == nil { return false }
-            
-        return urlSchemeList.contains(components!.scheme!)
+        
+        return urlScheme == components?.scheme
     }
 }
