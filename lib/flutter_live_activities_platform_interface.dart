@@ -8,7 +8,8 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FlutterLiveActivitiesPlatform _instance = MethodChannelFlutterLiveActivities();
+  static FlutterLiveActivitiesPlatform _instance =
+      MethodChannelFlutterLiveActivities();
 
   /// The default instance of [FlutterLiveActivitiesPlatform] to use.
   ///
@@ -52,7 +53,8 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
   }
 
   Future<bool> areActivitiesEnabled() {
-    throw UnimplementedError('areActivitiesEnabled() has not been implemented.');
+    throw UnimplementedError(
+        'areActivitiesEnabled() has not been implemented.');
   }
 
   Stream<String?> uriStream() {

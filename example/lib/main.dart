@@ -89,7 +89,8 @@ class _HomeState extends State<Home> {
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    _setInfo((await _liveActivitiesPlugin.getAllActivities()).toString());
+                    _setInfo((await _liveActivitiesPlugin.getAllActivities())
+                        .toString());
                   },
                   child: const Text('getAllActivities'),
                 ),
@@ -103,15 +104,17 @@ class _HomeState extends State<Home> {
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    _setInfo((await _liveActivitiesPlugin.getInitUri()).toString());
+                    _setInfo(
+                        (await _liveActivitiesPlugin.getInitUri()).toString());
                   },
                   child: const Text('getInitUri'),
                 ),
               if (_enabled == true && _latestActivityId == null)
                 ElevatedButton(
                   onPressed: () async {
-                    _latestActivityId =
-                        await _liveActivitiesPlugin.createActivity(<String, String>{'text': 'Hello World'});
+                    _latestActivityId = await _liveActivitiesPlugin
+                        .createActivity(
+                            <String, String>{'text': 'Hello World'});
 
                     setState(() {});
                   },
@@ -120,8 +123,8 @@ class _HomeState extends State<Home> {
               if (_latestActivityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivitiesPlugin
-                        .updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
+                    _liveActivitiesPlugin.updateActivity(_latestActivityId!,
+                        <String, String>{'text': 'Update Hello World'});
                   },
                   child: Text(
                     'Update live activity $_latestActivityId',

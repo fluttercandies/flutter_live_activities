@@ -10,7 +10,8 @@ class FlutterLiveActivities {
 
   /// Get launch uri
   Future<String?> getInitUri() async {
-    final String? url = await FlutterLiveActivitiesPlatform.instance.getInitUri();
+    final String? url =
+        await FlutterLiveActivitiesPlatform.instance.getInitUri();
     if (url?.startsWith(urlScheme) ?? false) return url;
     return null;
   }
