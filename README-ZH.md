@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/live_activities.png" height=100>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/live_activities.png" height=100>
 
 # Flutter Live Activities
 
@@ -13,20 +13,20 @@ Live Activities 的 Flutter 插件。用于创建、更新和处理 [DynamicIsla
 
 > 此插件需要通知权限
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/pre.gif" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" height=400>
 
 #### 1. 在iOS项目中添加 Widget
 
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/new.png" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/new.png" height=400>
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/we.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/we.png" height=300>
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/config.png" height=300> 
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/config.png" height=300> 
 
 * 创建成功后的目录结构
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/finish.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=300>
 
 #### 2. 编辑 `Runner/Info.plist` 和 `live_activity_test/Info.plist`
 
@@ -182,7 +182,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 * 在项目中添加 urlScheme
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/url.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/url.png" height=300>
 
 * Swift 代码:
 
