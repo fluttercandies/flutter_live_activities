@@ -5,8 +5,10 @@ import 'flutter_live_activities_platform_interface.dart';
 /// An implementation of [FlutterLiveActivitiesPlatform] that uses method channels.
 class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   /// The method channel used to interact with the native platform.
-  final MethodChannel _methodChannel = const MethodChannel('flutter_live_activities');
-  final EventChannel _eventChannel = const EventChannel('flutter_live_activities/event');
+  final MethodChannel _methodChannel =
+      const MethodChannel('flutter_live_activities');
+  final EventChannel _eventChannel =
+      const EventChannel('flutter_live_activities/event');
 
   @override
   Future<String?> getInitUri() async {
@@ -20,7 +22,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<List<String>> getAllActivities() async {
     try {
-      final String? data = await _methodChannel.invokeMethod<String>('getAllActivities');
+      final String? data =
+          await _methodChannel.invokeMethod<String>('getAllActivities');
       if (data == null) return <String>[];
       return data.split(',');
     } catch (e) {
@@ -30,7 +33,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
 
   @override
   Future<String?> createActivity(Map<String, String> data) async {
-    return _methodChannel.invokeMethod<String>('createActivity', <String, dynamic>{'data': data});
+    return _methodChannel.invokeMethod<String>(
+        'createActivity', <String, dynamic>{'data': data});
   }
 
   @override
@@ -56,7 +60,9 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<bool> areActivitiesEnabled() async {
     try {
-      return (await _methodChannel.invokeMethod<bool>('areActivitiesEnabled')) ?? false;
+      return (await _methodChannel
+              .invokeMethod<bool>('areActivitiesEnabled')) ??
+          false;
     } catch (e) {
       return false;
     }
@@ -64,6 +70,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
 
   @override
   Stream<String?> uriStream({String urlScheme = 'FLA'}) {
-    return _eventChannel.receiveBroadcastStream(urlScheme).map((dynamic eve) => eve?.toString());
+    return _eventChannel
+        .receiveBroadcastStream(urlScheme)
+        .map((dynamic eve) => eve?.toString());
   }
 }
