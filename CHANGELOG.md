@@ -17,3 +17,7 @@
 ## 0.0.4+1
 
 * Add Lock screen/banner UI example
+
+## 0.0.4+2
+
+* Fix the bug of url callback twice

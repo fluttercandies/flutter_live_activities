@@ -8,8 +8,7 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FlutterLiveActivitiesPlatform _instance =
-      MethodChannelFlutterLiveActivities();
+  static FlutterLiveActivitiesPlatform _instance = MethodChannelFlutterLiveActivities();
 
   /// The default instance of [FlutterLiveActivitiesPlatform] to use.
   ///
@@ -22,6 +21,10 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
   static set instance(FlutterLiveActivitiesPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
+  }
+
+  void init(String urlScheme) {
+    throw UnimplementedError('init() has not been implemented.');
   }
 
   Future<String?> getInitUri() {
@@ -49,11 +52,10 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
   }
 
   Future<bool> areActivitiesEnabled() {
-    throw UnimplementedError(
-        'areActivitiesEnabled() has not been implemented.');
+    throw UnimplementedError('areActivitiesEnabled() has not been implemented.');
   }
 
-  Stream<String?> uriStream({String urlScheme = 'FLA'}) {
+  Stream<String?> uriStream() {
     throw UnimplementedError('uriStream() has not been implemented.');
   }
 }

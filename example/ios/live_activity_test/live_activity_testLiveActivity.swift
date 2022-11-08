@@ -43,19 +43,19 @@ struct live_activity_testLiveActivity: Widget {
             VStack(alignment: .leading) {
                 Text(data?.text ?? "")
                 HStack {
-                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/A")!) {
                         Text("A")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
 
-                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/B")!) {
                         Text("B")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
 
-                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/C")!) {
                         Text("C")
                             .frame(width: 40, height: 40)
                             .background(.blue)
@@ -81,7 +81,7 @@ struct live_activity_testLiveActivity: Widget {
                     Text("Trailing")
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Link(destination: URL(string: "FLA://xx.xx/tap/HelloWorld")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/HelloWorld")!) {
                         Text(data?.text ?? "")
                             .background(.red)
                     }
@@ -94,7 +94,7 @@ struct live_activity_testLiveActivity: Widget {
             } minimal: {
                 Text("Min")
             }
-            .widgetURL(URL(string: "FLA://xx.xx/tap/DynamicIsland"))
+            .widgetURL(URL(string: "fla://xx.xx/tap/DynamicIsland"))
             .keylineTint(Color.red)
         }
     }

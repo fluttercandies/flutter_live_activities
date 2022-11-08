@@ -178,7 +178,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 #### 5. Deeplink(点击动作)
 
-* 默认 urlScheme 为 `FLA`
+* 默认 urlScheme 为 `fla`
 
 * 在项目中添加 urlScheme
 
@@ -199,19 +199,19 @@ struct live_activity_testLiveActivity: Widget {
                 Text(data?.text ?? "")
                 HStack {
                     // 通过 `Link` 创建一个动作
-                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/A")!) {
                         Text("A")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
                     // 通过 `Link` 创建一个动作
-                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/B")!) {
                         Text("B")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
                     // 通过 `Link` 创建一个动作
-                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/C")!) {
                         Text("C")
                             .frame(width: 40, height: 40)
                             .background(.blue)
@@ -230,7 +230,7 @@ struct live_activity_testLiveActivity: Widget {
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
                     // 通过 `Link` 创建一个动作
-                    Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {
+                    Link(destination: URL(string: "fla://xxxxxxx.xxxxxx")!) {
                         Text(data?.text ?? "")
                             .background(.red)
                     }
@@ -242,7 +242,7 @@ struct live_activity_testLiveActivity: Widget {
             } minimal: {
                 Text("Min")
             }
-            .widgetURL(URL(string: "FLA://www.apple.com")) // 或使用 widgetURL
+            .widgetURL(URL(string: "fla://www.apple.com")) // 或使用 widgetURL
             .keylineTint(Color.red)
         }
     }
@@ -252,7 +252,7 @@ struct live_activity_testLiveActivity: Widget {
 * Dart 代码:
 
 ```dart
-_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'FLA').listen((String? uri) {
+_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'fla').listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
 ```

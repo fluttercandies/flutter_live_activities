@@ -178,7 +178,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 #### 5. Deeplink
 
-* The default urlScheme is `FLA`
+* The default urlScheme is `fla`
 
 * Add urlScheme in your project
 
@@ -199,19 +199,19 @@ struct live_activity_testLiveActivity: Widget {
                 Text(data?.text ?? "")
                 HStack {
                     // Create an action via `Link`
-                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/A")!) {
                         Text("A")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
                     // Create an action via `Link`
-                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/B")!) {
                         Text("B")
                             .frame(width: 40, height: 40)
                             .background(.blue)
                     }
                     // Create an action via `Link`
-                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                    Link(destination: URL(string: "fla://xx.xx/tap/C")!) {
                         Text("C")
                             .frame(width: 40, height: 40)
                             .background(.blue)
@@ -230,7 +230,7 @@ struct live_activity_testLiveActivity: Widget {
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
                     // Create an action via `Link`
-                    Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {
+                    Link(destination: URL(string: "fla://xxxxxxx.xxxxxx")!) {
                         Text(data?.text ?? "")
                             .background(.red)
                     }
@@ -242,7 +242,7 @@ struct live_activity_testLiveActivity: Widget {
             } minimal: {
                 Text("Min")
             }
-            .widgetURL(URL(string: "FLA://www.apple.com")) // or use widgetURL
+            .widgetURL(URL(string: "fla://www.apple.com")) // or use widgetURL
             .keylineTint(Color.red)
         }
     }
@@ -252,7 +252,7 @@ struct live_activity_testLiveActivity: Widget {
 * Dart code:
 
 ```dart
-_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'FLA').listen((String? uri) {
+_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'fla').listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
 ```

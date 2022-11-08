@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>FLA</string>
+				<string>fla</string>
 			</array>
 		</dict>
 	</array>

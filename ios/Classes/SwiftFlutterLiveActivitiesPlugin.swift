@@ -7,13 +7,6 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     private var urlScheme: String?
     
     private var initialUrl: URL?
-    private var latestUrl: URL? {
-        didSet {
-            if latestUrl != nil {
-                eventSink?.self(latestUrl?.absoluteString)
-            }
-        }
-    }
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_live_activities", binaryMessenger: registrar.messenger())
@@ -28,6 +21,15 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if #available(iOS 16.1, *) {
             switch call.method {
+            case "init":
+                guard let args = call.arguments as? [String: Any] else {
+                    return
+                }
+                if let scheme = args["urlScheme"] as? String {
+                    urlScheme = scheme
+                } else {
+                    result(FlutterError(code: "DATA_ERROR", message: "'liveId' is invalid", details: nil))
+                }
             case "getInitUri":
                 result(initialUrl?.absoluteString)
             case "createActivity":
@@ -147,35 +149,28 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
-        urlScheme = arguments as? String
         return nil
     }
      
     public func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        if eventSink != nil {
-            eventSink!(FlutterEndOfEventStream)
-        }
+        eventSink?.self(FlutterEndOfEventStream)
         eventSink = nil
-        urlScheme = nil
-       
         return nil
     }
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]) -> Bool {
         let launchUrl = (launchOptions[UIApplication.LaunchOptionsKey.url] as? NSURL)?.absoluteURL
-        if launchUrl != nil, isLiveActivitiesUrl(url: launchUrl!) {
+        
+        if launchUrl != nil {
             initialUrl = launchUrl?.absoluteURL
-            latestUrl = initialUrl
         }
+        
         return true
     }
-     
+    
     public func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         if isLiveActivitiesUrl(url: url) {
-            latestUrl = url
-            if eventSink != nil {
-                eventSink!(latestUrl?.absoluteString)
-            }
+            eventSink?.self(url.absoluteString)
             return true
         }
         return false

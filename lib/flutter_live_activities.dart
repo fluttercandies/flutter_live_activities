@@ -1,9 +1,18 @@
 import 'flutter_live_activities_platform_interface.dart';
 
 class FlutterLiveActivities {
+  FlutterLiveActivities({this.urlScheme = 'fla'}) {
+    FlutterLiveActivitiesPlatform.instance.init(urlScheme);
+  }
+
+  /// The url scheme used to interact with the native platform.
+  final String urlScheme;
+
   /// Get launch uri
-  Future<String?> getInitUri() {
-    return FlutterLiveActivitiesPlatform.instance.getInitUri();
+  Future<String?> getInitUri() async {
+    final String? url = await FlutterLiveActivitiesPlatform.instance.getInitUri();
+    if (url?.startsWith(urlScheme) ?? false) return url;
+    return null;
   }
 
   /// Get all activities id
@@ -45,8 +54,7 @@ class FlutterLiveActivities {
     return FlutterLiveActivitiesPlatform.instance.areActivitiesEnabled();
   }
 
-  Stream<String?> uriStream({String urlScheme = 'FLA'}) {
-    return FlutterLiveActivitiesPlatform.instance
-        .uriStream(urlScheme: urlScheme);
+  Stream<String?> uriStream() {
+    return FlutterLiveActivitiesPlatform.instance.uriStream();
   }
 }
