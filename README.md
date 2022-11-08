@@ -9,7 +9,7 @@
 
 > This plugin requires notification permission
 
-<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/pre.gif" height=300>
+<img src="https://raw.githubusercontent.com/fluttercandies/flutter_live_activities/main/pre/pre.gif" height=400>
 
 #### 1. Add a Widget to the iOS project
 

@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Edit example
+
+## 0.0.4
+
+* Add multiple streams to coexist, add Chinese documents
