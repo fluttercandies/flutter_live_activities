@@ -13,10 +13,7 @@ Live Activities 的 Flutter 插件。用于创建、更新和处理 [DynamicIsla
 
 > 此插件需要通知权限
 
-<figure class="half">
-    <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200>
-    <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200>
-</figure>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200>
 
 #### 1. 在iOS项目中添加 Widget
 
