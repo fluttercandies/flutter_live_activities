@@ -14,6 +14,7 @@ English | [中文说明](README-ZH.md)
 > This plugin requires notification permission
 
 <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" height=400>
 
 #### 1. Add a Widget to the iOS project
 
@@ -191,13 +192,43 @@ await _liveActivitiesPlugin.getAllActivities()
 struct live_activity_testLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: FlutterLiveActivities.self) { context in
-            ...
+            let data = TestData(JSONData: context.state.data)
+
+            // Lock screen/banner UI goes here
+
+            VStack(alignment: .leading) {
+                Text(data?.text ?? "")
+                HStack {
+                    // Create an action via `Link`
+                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                        Text("A")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                    // Create an action via `Link`
+                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                        Text("B")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                    // Create an action via `Link`
+                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                        Text("C")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                }
+                .frame(width: .infinity, height: .infinity)
+            }
+            .padding(20)
+            .activityBackgroundTint(Color.cyan)
+            .activitySystemActionForegroundColor(Color.black)
+
         } dynamicIsland: { context in
 
             let data = TestData(JSONData: context.state.data)
 
             return DynamicIsland {
-                ...
                 DynamicIslandExpandedRegion(.bottom) {
                     // Create an action via `Link`
                     Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {

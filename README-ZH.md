@@ -14,6 +14,7 @@ Live Activities 的 Flutter 插件。用于创建、更新和处理 [DynamicIsla
 > 此插件需要通知权限
 
 <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" height=400>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" height=400>
 
 #### 1. 在iOS项目中添加 Widget
 
@@ -191,13 +192,43 @@ await _liveActivitiesPlugin.getAllActivities()
 struct live_activity_testLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: FlutterLiveActivities.self) { context in
-            ...
+            let data = TestData(JSONData: context.state.data)
+
+            // Lock screen/banner UI goes here
+
+            VStack(alignment: .leading) {
+                Text(data?.text ?? "")
+                HStack {
+                    // 通过 `Link` 创建一个动作
+                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                        Text("A")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                    // 通过 `Link` 创建一个动作
+                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                        Text("B")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                    // 通过 `Link` 创建一个动作
+                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                        Text("C")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                }
+                .frame(width: .infinity, height: .infinity)
+            }
+            .padding(20)
+            .activityBackgroundTint(Color.cyan)
+            .activitySystemActionForegroundColor(Color.black)
+
         } dynamicIsland: { context in
 
             let data = TestData(JSONData: context.state.data)
 
             return DynamicIsland {
-                ...
                 DynamicIslandExpandedRegion(.bottom) {
                     // 通过 `Link` 创建一个动作
                     Link(destination: URL(string: "FLA://xxxxxxx.xxxxxx")!) {

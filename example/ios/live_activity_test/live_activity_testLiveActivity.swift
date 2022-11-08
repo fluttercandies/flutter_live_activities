@@ -39,9 +39,31 @@ struct live_activity_testLiveActivity: Widget {
             let data = TestData(JSONData: context.state.data)
 
             // Lock screen/banner UI goes here
-            VStack {
+
+            VStack(alignment: .leading) {
                 Text(data?.text ?? "")
+                HStack {
+                    Link(destination: URL(string: "FLA://xx.xx/tap/A")!) {
+                        Text("A")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+
+                    Link(destination: URL(string: "FLA://xx.xx/tap/B")!) {
+                        Text("B")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+
+                    Link(destination: URL(string: "FLA://xx.xx/tap/C")!) {
+                        Text("C")
+                            .frame(width: 40, height: 40)
+                            .background(.blue)
+                    }
+                }
+                .frame(width: .infinity, height: .infinity)
             }
+            .padding(20)
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
 
