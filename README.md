@@ -13,8 +13,10 @@ English | [中文说明](README-ZH.md)
 
 > This plugin requires notification permission
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" height=400>
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" height=400>
+<figure class="half">
+    <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200>
+    <img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200>
+</figure>
 
 #### 1. Add a Widget to the iOS project
 
