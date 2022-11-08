@@ -13,3 +13,7 @@
 ## 0.0.4
 
 * Add multiple streams to coexist, add Chinese documents
+
+## 0.0.4+1
+
+* Add Lock screen/banner UI example
