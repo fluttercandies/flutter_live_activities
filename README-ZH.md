@@ -180,9 +180,11 @@ await _liveActivitiesPlugin.getAllActivities()
 
 * 默认 urlScheme 为 `fla`
 
+> `FlutterLiveActivities({this.urlScheme = 'fla'})`
+
 * 在项目中添加 urlScheme
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/url.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/scheme.png" height=300>
 
 * Swift 代码:
 
@@ -252,7 +254,7 @@ struct live_activity_testLiveActivity: Widget {
 * Dart 代码:
 
 ```dart
-_subscription ??= _liveActivitiesPlugin.uriStream(urlScheme: 'fla').listen((String? uri) {
+_subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
 ```
