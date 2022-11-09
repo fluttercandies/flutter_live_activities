@@ -21,3 +21,7 @@
 ## 0.0.4+2
 
 * Fix the bug of url callback twice
+
+## 0.0.4+3
+
+* Update README

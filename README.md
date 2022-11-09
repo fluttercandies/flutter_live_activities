@@ -26,7 +26,7 @@ English | [中文说明](README-ZH.md)
 
 * Directory structure
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=400>
 
 #### 2. Edit `Runner/Info.plist` and `live_activity_test/Info.plist`
 
@@ -132,48 +132,48 @@ import 'package:flutter_live_activities/flutter_live_activities.dart';
 
 ...
 
-final FlutterLiveActivities _liveActivitiesPlugin = FlutterLiveActivities();
+final FlutterLiveActivities _liveActivities = FlutterLiveActivities();
 
-String? _latestActivityId;
+String? _activityId;
 ```
 
 * Check if the Live Activities function is enabled
 ```dart
-await _liveActivitiesPlugin.areActivitiesEnabled();
+await _liveActivities.areActivitiesEnabled();
 ```
 
 * Get launch url
 ```dart
-await _liveActivitiesPlugin.getInitUri()
+await _liveActivities.getInitUri()
 ```
 
 * Create a Live Activity
 ```dart
-_latestActivityId = await _liveActivitiesPlugin.createActivity(<String, String>{'text': 'Hello World'});
+_activityId = await _liveActivities.createActivity(<String, String>{'text': 'Hello World'});
 ```
 
 * Update a Live Activity
 ```dart
-if(_latestActivityId != null) {
-    await _liveActivitiesPlugin.updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
+if(_activityId != null) {
+    await _liveActivities.updateActivity(_activityId!, <String, String>{'text': 'Update Hello World'});
 }
 ```
 
 * End a Live Activity
 ```dart
-if(_latestActivityId != null) {
-    await _liveActivitiesPlugin.endActivity(_latestActivityId!);
+if(_activityId != null) {
+    await _liveActivities.endActivity(_activityId!);
 }
 ```
 
 * End all Live Activities
 ```dart
-await _liveActivitiesPlugin.endAllActivities();
+await _liveActivities.endAllActivities();
 ```
 
 * Get all Live Activities id
 ```dart
-await _liveActivitiesPlugin.getAllActivities()
+await _liveActivities.getAllActivities()
 ```
 
 #### 5. Deeplink
@@ -184,7 +184,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 * Add urlScheme in your project
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/scheme.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/scheme.png" height=400>
 
 * Swift code:
 
@@ -254,7 +254,7 @@ struct live_activity_testLiveActivity: Widget {
 * Dart code:
 
 ```dart
-_subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
+_subscription ??= _liveActivities.uriStream().listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
 ```

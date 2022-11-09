@@ -28,8 +28,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final FlutterLiveActivities _liveActivitiesPlugin = FlutterLiveActivities();
-  String? _latestActivityId;
+  final FlutterLiveActivities _liveActivities = FlutterLiveActivities();
+  String? _activityId;
   bool? _enabled;
 
   StreamSubscription<String?>? _subscription;
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
+    _subscription ??= _liveActivities.uriStream().listen((String? uri) {
       dev.log('deeplink uri: $uri');
       if (uri != null) _setInfo(uri);
     });
@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _getInitUri() async {
-    _setInfo('initUri : ${(await _liveActivitiesPlugin.getInitUri()) ?? ''}');
+    _setInfo('initUri : ${(await _liveActivities.getInitUri()) ?? ''}');
   }
 
   void _setInfo(String info) {
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  _enabled = await _liveActivitiesPlugin.areActivitiesEnabled();
+                  _enabled = await _liveActivities.areActivitiesEnabled();
                   setState(() {});
                 },
                 child: Text('Enabled: $_enabled'),
@@ -89,58 +89,56 @@ class _HomeState extends State<Home> {
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    _setInfo((await _liveActivitiesPlugin.getAllActivities())
-                        .toString());
+                    _setInfo(
+                        (await _liveActivities.getAllActivities()).toString());
                   },
                   child: const Text('getAllActivities'),
                 ),
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    await _liveActivitiesPlugin.endAllActivities();
+                    await _liveActivities.endAllActivities();
                   },
                   child: const Text('endAllActivities'),
                 ),
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    _setInfo(
-                        (await _liveActivitiesPlugin.getInitUri()).toString());
+                    _setInfo((await _liveActivities.getInitUri()).toString());
                   },
                   child: const Text('getInitUri'),
                 ),
-              if (_enabled == true && _latestActivityId == null)
+              if (_enabled == true && _activityId == null)
                 ElevatedButton(
                   onPressed: () async {
-                    _latestActivityId = await _liveActivitiesPlugin
-                        .createActivity(
-                            <String, String>{'text': 'Hello World'});
+                    _activityId = await _liveActivities.createActivity(
+                        <String, String>{'text': 'Hello World'});
 
                     setState(() {});
                   },
                   child: const Text('Create live activity'),
                 ),
-              if (_latestActivityId != null)
+              if (_activityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivitiesPlugin.updateActivity(_latestActivityId!,
+                    _liveActivities.updateActivity(_activityId!,
                         <String, String>{'text': 'Update Hello World'});
                   },
                   child: Text(
-                    'Update live activity $_latestActivityId',
+                    'Update live activity $_activityId',
                     textAlign: TextAlign.center,
                   ),
                 ),
-              if (_latestActivityId != null)
+              if (_activityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivitiesPlugin.endActivity(_latestActivityId!);
-                    _latestActivityId = null;
+                    _liveActivities.endActivity(_activityId!);
+                    _activityId = null;
                     _info = '';
                     setState(() {});
                   },
                   child: Text(
-                    'End live activity $_latestActivityId',
+                    'End live activity $_activityId',
                     textAlign: TextAlign.center,
                   ),
                 ),

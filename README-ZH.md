@@ -26,7 +26,7 @@ Live Activities 的 Flutter 插件。用于创建、更新和处理 [DynamicIsla
 
 * 创建成功后的目录结构
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/finish.png" height=400>
 
 #### 2. 编辑 `Runner/Info.plist` 和 `live_activity_test/Info.plist`
 
@@ -132,48 +132,48 @@ import 'package:flutter_live_activities/flutter_live_activities.dart';
 
 ...
 
-final FlutterLiveActivities _liveActivitiesPlugin = FlutterLiveActivities();
+final FlutterLiveActivities _liveActivities = FlutterLiveActivities();
 
-String? _latestActivityId;
+String? _activityId;
 ```
 
 * 检查设备是否开启此功能
 ```dart
-await _liveActivitiesPlugin.areActivitiesEnabled();
+await _liveActivities.areActivitiesEnabled();
 ```
 
 * 获取启动Link
 ```dart
-await _liveActivitiesPlugin.getInitUri()
+await _liveActivities.getInitUri()
 ```
 
 * 创建一个 Live Activity
 ```dart
-_latestActivityId = await _liveActivitiesPlugin.createActivity(<String, String>{'text': 'Hello World'});
+_activityId = await _liveActivities.createActivity(<String, String>{'text': 'Hello World'});
 ```
 
 * 更新 Live Activity
 ```dart
-if(_latestActivityId != null) {
-    await _liveActivitiesPlugin.updateActivity(_latestActivityId!, <String, String>{'text': 'Update Hello World'});
+if(_activityId != null) {
+    await _liveActivities.updateActivity(_activityId!, <String, String>{'text': 'Update Hello World'});
 }
 ```
 
 * 结束 Live Activity
 ```dart
-if(_latestActivityId != null) {
-    await _liveActivitiesPlugin.endActivity(_latestActivityId!);
+if(_activityId != null) {
+    await _liveActivities.endActivity(_activityId!);
 }
 ```
 
 * 结束全部 Live Activities
 ```dart
-await _liveActivitiesPlugin.endAllActivities();
+await _liveActivities.endAllActivities();
 ```
 
 * 获取全部 Live Activities id
 ```dart
-await _liveActivitiesPlugin.getAllActivities()
+await _liveActivities.getAllActivities()
 ```
 
 #### 5. Deeplink(点击动作)
@@ -184,7 +184,7 @@ await _liveActivitiesPlugin.getAllActivities()
 
 * 在项目中添加 urlScheme
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/scheme.png" height=300>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/scheme.png" height=400>
 
 * Swift 代码:
 
@@ -254,7 +254,7 @@ struct live_activity_testLiveActivity: Widget {
 * Dart 代码:
 
 ```dart
-_subscription ??= _liveActivitiesPlugin.uriStream().listen((String? uri) {
+_subscription ??= _liveActivities.uriStream().listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
 ```
