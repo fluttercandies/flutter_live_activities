@@ -39,17 +39,25 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    _initStream();
+    _getInitUri();
+  }
+
+  Future<void> _initStream() async {
     _subscription ??= _liveActivities.uriStream().listen((String? uri) {
       dev.log('deeplink uri: $uri');
       if (uri != null) _setInfo(uri);
     });
-    _getInitUri();
+  }
+
+  void _cancelStream() {
+    _subscription?.cancel();
+    _subscription = null;
   }
 
   @override
   void dispose() {
-    _subscription?.cancel();
-    _subscription = null;
+    _cancelStream();
     super.dispose();
   }
 
@@ -111,6 +119,8 @@ class _HomeState extends State<Home> {
               if (_enabled == true && _activityId == null)
                 ElevatedButton(
                   onPressed: () async {
+                    _initStream();
+
                     _activityId = await _liveActivities.createActivity(
                         <String, String>{'text': 'Hello World'});
 
@@ -132,6 +142,7 @@ class _HomeState extends State<Home> {
               if (_activityId != null)
                 ElevatedButton(
                   onPressed: () {
+                    _cancelStream();
                     _liveActivities.endActivity(_activityId!);
                     _activityId = null;
                     _info = '';

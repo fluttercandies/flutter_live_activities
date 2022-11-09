@@ -25,3 +25,7 @@
 ## 0.0.4+3
 
 * Update README
+
+## 0.0.4+4
+
+* Fix stream bug

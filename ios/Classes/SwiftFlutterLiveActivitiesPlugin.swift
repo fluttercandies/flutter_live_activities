@@ -153,7 +153,6 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     }
      
     public func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        eventSink?.self(FlutterEndOfEventStream)
         eventSink = nil
         return nil
     }
