@@ -159,6 +159,8 @@ if(_activityId != null) {
 }
 ```
 
+> ActivityKit 更新和远程推送通知更新的更新动态数据大小不能超过 4KB。
+
 * 结束 Live Activity
 ```dart
 if(_activityId != null) {

@@ -1,3 +1,4 @@
+import 'package:flutter_live_activities/src/live_activities_status.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutter_live_activities_method_channel.dart';
@@ -8,8 +9,7 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FlutterLiveActivitiesPlatform _instance =
-      MethodChannelFlutterLiveActivities();
+  static FlutterLiveActivitiesPlatform _instance = MethodChannelFlutterLiveActivities();
 
   /// The default instance of [FlutterLiveActivitiesPlatform] to use.
   ///
@@ -28,7 +28,7 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
     throw UnimplementedError('init() has not been implemented.');
   }
 
-  Future<String?> getInitUri() {
+  Future<Uri?> getInitUri() {
     throw UnimplementedError('getInitUri() has not been implemented.');
   }
 
@@ -40,24 +40,35 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
     throw UnimplementedError('createActivity() has not been implemented.');
   }
 
-  Future<void> updateActivity(String liveId, Map<String, String> data) {
+  Future<bool> updateActivity(String liveId, Map<String, String> data) {
     throw UnimplementedError('updateActivity() has not been implemented.');
   }
 
-  Future<void> endActivity(String liveId) {
+  Future<bool> endActivity(String liveId) {
     throw UnimplementedError('endActivity() has not been implemented.');
   }
 
-  Future<void> endAllActivities() {
+  Future<LiveActivitiesState> getActivityState(String liveId) async {
+    throw UnimplementedError('getActivityState() has not been implemented.');
+  }
+
+  Future<bool> endAllActivities() {
     throw UnimplementedError('endAllActivity() has not been implemented.');
   }
 
   Future<bool> areActivitiesEnabled() {
-    throw UnimplementedError(
-        'areActivitiesEnabled() has not been implemented.');
+    throw UnimplementedError('areActivitiesEnabled() has not been implemented.');
   }
 
-  Stream<String?> uriStream() {
+  Stream<Uri?> uriStream() {
     throw UnimplementedError('uriStream() has not been implemented.');
+  }
+
+  Future<bool> sendImageToGroup({
+    required String id,
+    required String filePath,
+    required String groupId,
+  }) {
+    throw UnimplementedError('sendImageToGroup() has not been implemented.');
   }
 }

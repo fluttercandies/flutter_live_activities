@@ -159,6 +159,8 @@ if(_activityId != null) {
 }
 ```
 
+> The updated dynamic data for both ActivityKit updates and remote push notification updates can’t exceed 4KB in size.
+
 * End a Live Activity
 ```dart
 if(_activityId != null) {

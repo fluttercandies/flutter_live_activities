@@ -29,3 +29,8 @@
 ## 0.0.4+4
 
 * Fix stream bug
+
+## 0.0.5
+
+* Add apis
+* Add image solution

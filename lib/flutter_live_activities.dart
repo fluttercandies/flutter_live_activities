@@ -9,10 +9,9 @@ class FlutterLiveActivities {
   final String urlScheme;
 
   /// Get launch uri
-  Future<String?> getInitUri() async {
-    final String? url =
-        await FlutterLiveActivitiesPlatform.instance.getInitUri();
-    if (url?.startsWith(urlScheme) ?? false) return url;
+  Future<Uri?> getInitUri() async {
+    final Uri? url = await FlutterLiveActivitiesPlatform.instance.getInitUri();
+    if (url?.isScheme(urlScheme) ?? false) return url;
     return null;
   }
 
@@ -55,7 +54,8 @@ class FlutterLiveActivities {
     return FlutterLiveActivitiesPlatform.instance.areActivitiesEnabled();
   }
 
-  Stream<String?> uriStream() {
+  /// Get the state of an iOS 16.1+ live activity.
+  Stream<Uri?> uriStream() {
     return FlutterLiveActivitiesPlatform.instance.uriStream();
   }
 }

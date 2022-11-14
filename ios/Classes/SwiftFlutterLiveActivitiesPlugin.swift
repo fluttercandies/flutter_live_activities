@@ -60,11 +60,22 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
                     result(FlutterError(code: "DATA_ERROR", message: "'liveId' is invalid", details: nil))
                 }
             case "getAllActivities":
-                result(getAllActivities())
+                getAllActivities(result: result)
             case "endAllActivities":
-                endAllActivities()
+                endAllActivities(result: result)
+            case "getActivityState":
+                guard let args = call.arguments as? [String: Any] else {
+                    return
+                }
+                
+                if let liveId = args["liveId"] as? String {
+                    getActivityState(liveId: liveId, result: result)
+                } else {
+                    result(FlutterError(code: "DATA_ERROR", message: "'liveId' is invalid", details: nil))
+                }
+                
             case "areActivitiesEnabled":
-                result(areActivitiesEnabled(result: result))
+                areActivitiesEnabled(result: result)
             default:
                 break
             }
@@ -97,9 +108,12 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
                 if liveId == activity.id {
                     let updatedStatus: FlutterLiveActivities.LiveData = .init(data: data)
                     await activity.update(using: updatedStatus)
-                    break
+                    result(true)
+                    return
                 }
             }
+            
+            result(false)
         }
     }
     
@@ -109,6 +123,30 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
             for activity in Activity<FlutterLiveActivities>.activities {
                 if liveId == activity.id {
                     await activity.end(dismissalPolicy: .immediate)
+                    result(true)
+                    return
+                }
+            }
+            
+            result(false)
+        }
+    }
+    
+    @available(iOS 16.1, *)
+    func getActivityState(liveId: String, result: @escaping FlutterResult) {
+        Task {
+            for activity in Activity<FlutterLiveActivities>.activities {
+                if liveId == activity.id {
+                    switch activity.activityState {
+                    case .active:
+                        result(0)
+                    case .ended:
+                        result(1)
+                    case .dismissed:
+                        result(2)
+                    @unknown default:
+                        result(3)
+                    }
                     break
                 }
             }
@@ -116,27 +154,30 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     }
     
     @available(iOS 16.1, *)
-    func getAllActivities() -> String {
+    func getAllActivities(result: @escaping FlutterResult) {
         var list: [String] = []
         for activity in Activity<FlutterLiveActivities>.activities {
             list.append(activity.id)
         }
-        return list.joined(separator: ",")
+        result(list.joined(separator: ","))
     }
     
     @available(iOS 16.1, *)
-    func endAllActivities() {
+    func endAllActivities(result: @escaping FlutterResult) {
         Task {
             for activity in Activity<FlutterLiveActivities>.activities {
                 await activity.end(dismissalPolicy: .immediate)
             }
+            
+            result(true)
         }
     }
     
     @available(iOS 16.1, *)
-    func areActivitiesEnabled(result: @escaping FlutterResult) -> Bool {
+    func areActivitiesEnabled(result: @escaping FlutterResult) {
         var hasAuthorization = true
         let center = UNUserNotificationCenter.current()
+        
         center.requestAuthorization(options: [.alert, .sound, .badge]) { _, error in
             if let error = error {
                 hasAuthorization = false
@@ -144,7 +185,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
             }
         }
         
-        return ActivityAuthorizationInfo().areActivitiesEnabled && hasAuthorization
+        result(ActivityAuthorizationInfo().areActivitiesEnabled && hasAuthorization)
     }
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {

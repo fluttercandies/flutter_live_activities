@@ -1,14 +1,13 @@
 import 'package:flutter/services.dart';
 
 import 'flutter_live_activities_platform_interface.dart';
+import 'src/live_activities_status.dart';
 
 /// An implementation of [FlutterLiveActivitiesPlatform] that uses method channels.
 class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   /// The method channel used to interact with the native platform.
-  final MethodChannel _methodChannel =
-      const MethodChannel('flutter_live_activities');
-  final EventChannel _eventChannel =
-      const EventChannel('flutter_live_activities/event');
+  final MethodChannel _methodChannel = const MethodChannel('flutter_live_activities');
+  final EventChannel _eventChannel = const EventChannel('flutter_live_activities/event');
 
   @override
   void init(String urlScheme) {
@@ -18,9 +17,9 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   }
 
   @override
-  Future<String?> getInitUri() async {
+  Future<Uri?> getInitUri() async {
     try {
-      return await _methodChannel.invokeMethod<String?>('getInitUri');
+      return Uri.tryParse(await _methodChannel.invokeMethod<String?>('getInitUri') ?? '');
     } catch (e) {
       return null;
     }
@@ -29,8 +28,7 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<List<String>> getAllActivities() async {
     try {
-      final String? data =
-          await _methodChannel.invokeMethod<String>('getAllActivities');
+      final String? data = await _methodChannel.invokeMethod<String>('getAllActivities');
       if (data == null) return <String>[];
       return data.split(',');
     } catch (e) {
@@ -40,45 +38,69 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
 
   @override
   Future<String?> createActivity(Map<String, String> data) async {
-    return _methodChannel.invokeMethod<String>(
-        'createActivity', <String, dynamic>{'data': data});
+    return _methodChannel.invokeMethod<String>('createActivity', <String, dynamic>{'data': data});
   }
 
   @override
-  Future<void> updateActivity(String liveId, Map<String, String> data) async {
-    return _methodChannel.invokeMethod('updateActivity', <String, dynamic>{
-      'liveId': liveId,
-      'data': data,
-    });
+  Future<bool> updateActivity(String liveId, Map<String, String> data) async {
+    return await _methodChannel
+            .invokeMethod<bool>('updateActivity', <String, dynamic>{'liveId': liveId, 'data': data}) ??
+        false;
   }
 
   @override
-  Future<void> endActivity(String liveId) async {
-    return _methodChannel.invokeMethod('endActivity', <String, String>{
-      'liveId': liveId,
-    });
+  Future<bool> endActivity(String liveId) async {
+    return await _methodChannel.invokeMethod<bool>('endActivity', <String, String>{
+          'liveId': liveId,
+        }) ??
+        false;
   }
 
   @override
-  Future<void> endAllActivities() {
-    return _methodChannel.invokeMethod('endAllActivities');
+  Future<LiveActivitiesState> getActivityState(String liveId) async {
+    try {
+      final int? data = await _methodChannel.invokeMethod<int>('getActivityState', <String, String>{
+        'liveId': liveId,
+      });
+
+      return LiveActivitiesState.values[data ?? 3];
+    } catch (e) {
+      return LiveActivitiesState.unknown;
+    }
+  }
+
+  @override
+  Future<bool> endAllActivities() async {
+    return await _methodChannel.invokeMethod<bool>('endAllActivities') ?? false;
   }
 
   @override
   Future<bool> areActivitiesEnabled() async {
     try {
-      return (await _methodChannel
-              .invokeMethod<bool>('areActivitiesEnabled')) ??
-          false;
+      return (await _methodChannel.invokeMethod<bool>('areActivitiesEnabled')) ?? false;
     } catch (e) {
       return false;
     }
   }
 
   @override
-  Stream<String?> uriStream({String urlScheme = 'fla'}) {
-    return _eventChannel
-        .receiveBroadcastStream(urlScheme)
-        .map((dynamic eve) => eve?.toString());
+  Stream<Uri?> uriStream() {
+    return _eventChannel.receiveBroadcastStream().map((dynamic eve) {
+      return Uri.tryParse(eve.toString());
+    });
+  }
+
+  @override
+  Future<bool> sendImageToGroup({
+    required String id,
+    required String filePath,
+    required String groupId,
+  }) async {
+    return await _methodChannel.invokeMethod<bool>('sendImageToGroup', <String, String>{
+          'id': id,
+          'filePath': filePath,
+          'groupId': groupId,
+        }) ??
+        false;
   }
 }

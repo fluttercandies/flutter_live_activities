@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   String? _activityId;
   bool? _enabled;
 
-  StreamSubscription<String?>? _subscription;
+  StreamSubscription<Uri?>? _subscription;
 
   String _info = '';
 
@@ -44,9 +44,9 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _initStream() async {
-    _subscription ??= _liveActivities.uriStream().listen((String? uri) {
+    _subscription ??= _liveActivities.uriStream().listen((Uri? uri) {
       dev.log('deeplink uri: $uri');
-      if (uri != null) _setInfo(uri);
+      if (uri != null) _setInfo(uri.toString());
     });
   }
 
@@ -97,8 +97,7 @@ class _HomeState extends State<Home> {
               if (_enabled == true)
                 ElevatedButton(
                   onPressed: () async {
-                    _setInfo(
-                        (await _liveActivities.getAllActivities()).toString());
+                    _setInfo((await _liveActivities.getAllActivities()).toString());
                   },
                   child: const Text('getAllActivities'),
                 ),
@@ -121,8 +120,7 @@ class _HomeState extends State<Home> {
                   onPressed: () async {
                     _initStream();
 
-                    _activityId = await _liveActivities.createActivity(
-                        <String, String>{'text': 'Hello World'});
+                    _activityId = await _liveActivities.createActivity(<String, String>{'text': 'Hello World'});
 
                     setState(() {});
                   },
@@ -131,8 +129,7 @@ class _HomeState extends State<Home> {
               if (_activityId != null)
                 ElevatedButton(
                   onPressed: () {
-                    _liveActivities.updateActivity(_activityId!,
-                        <String, String>{'text': 'Update Hello World'});
+                    _liveActivities.updateActivity(_activityId!, <String, String>{'text': 'Update Hello World'});
                   },
                   child: Text(
                     'Update live activity $_activityId',
