@@ -13,7 +13,7 @@ Live Activities 的 Flutter 插件。用于创建、更新和处理 [DynamicIsla
 
 > 此插件需要通知权限
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/img.png" width=200>
 
 #### 1. 在iOS项目中添加 Widget
 
@@ -159,7 +159,11 @@ if(_activityId != null) {
 }
 ```
 
-> ActivityKit 更新和远程推送通知更新的更新动态数据大小不能超过 4KB。
+> ActivityKit 更新和远程推送通知更新的更新动态数据大小不能超过 4KB。 [相关文档](https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities)
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/4k.png" height=300>
+
+> 其它解决方案请参考 [live_activities](https://pub.dev/packages/live_activities)
 
 * 结束 Live Activity
 ```dart
@@ -259,4 +263,55 @@ struct live_activity_testLiveActivity: Widget {
 _subscription ??= _liveActivities.uriStream().listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
+```
+
+#### 6. Display image
+
+> 由于数据块大小的限制。我们无法向LiveActivities发送图片元数据  
+
+> LiveActivities不支持异步加载，所以我们不能使用AsyncImage或读取本地文件
+
+> 开发者论坛的解决方案: [716902](https://developer.apple.com/forums/thread/716902)
+
+* 添加 AppGroup (此操作需要付费Apple账户)
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/group.png" height=300>
+
+* 在 Runner 和 Widget 中创建/选择同样的 groupId
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/groupId.png" height=300>
+
+* 发送图片到 group:
+
+Dart代码:
+```dart
+Future<void> _sendImageToGroup() async {
+    const String url = 'https://cdn.iconscout.com/icon/free/png-256/flutter-2752187-2285004.png';
+
+    final String? path = await ImageHelper.getFilePathFromUrl(url);
+
+    if (path != null) {
+        _liveActivities.sendImageToGroup(
+            id: 'test-img',
+            filePath: path,
+            groupId: 'group.live_example',
+        );
+    }
+}
+```
+
+Swift代码:
+```swift
+DynamicIslandExpandedRegion(.leading) {
+    if let imageContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.live_example")?.appendingPathComponent("test-img"), /// Use id here
+        let uiImage = UIImage(contentsOfFile: imageContainer.path())
+    {
+        Image(uiImage: uiImage)
+            .resizable()
+            .frame(width: 53, height: 53)
+            .cornerRadius(13)
+    } else {
+        Text("Leading")
+    }
+}
 ```

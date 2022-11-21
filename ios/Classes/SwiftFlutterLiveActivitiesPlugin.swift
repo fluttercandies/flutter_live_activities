@@ -76,6 +76,18 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
                 
             case "areActivitiesEnabled":
                 areActivitiesEnabled(result: result)
+            case "sendImageToGroup":
+                guard let args = call.arguments as? [String: Any] else {
+                    result(FlutterError(code: "DATA_ERROR", message: "parameter is invalid", details: nil))
+                    return
+                }
+                
+                if let data = args as? [String: String] {
+                    receiveImage(data: data, result: result)
+                } else {
+                    result(FlutterError(code: "DATA_ERROR", message: "parameter is invalid", details: nil))
+                }
+                            
             default:
                 break
             }
@@ -186,6 +198,41 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
         }
         
         result(ActivityAuthorizationInfo().areActivitiesEnabled && hasAuthorization)
+    }
+    
+    @available(iOS 16.0, *)
+    private func receiveImage(data: [String: String], result: @escaping FlutterResult) {
+        guard var groupId = data["groupId"]
+        else {
+            result(FlutterError(code: "DATA_ERROR", message: "no groupId", details: nil))
+            return
+        }
+        
+        guard var destination = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupId)
+        else {
+            result(FlutterError(code: "DATA_ERROR", message: "no group", details: nil))
+            return
+        }
+        
+        do {
+            if let id = data["id"], let path = data["filePath"] {
+                destination = destination.appendingPathComponent(id)
+                
+                do {
+                    try FileManager.default.removeItem(at: destination)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                try FileManager.default.moveItem(at: URL(filePath: path), to: destination)
+                
+                result(true)
+            }
+        } catch {
+            result(FlutterError(code: "OP_ERROR", message: "receiveImage error", details: error.localizedDescription))
+            return
+        }
     }
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {

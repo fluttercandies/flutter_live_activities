@@ -75,7 +75,20 @@ struct live_activity_testLiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    if let imageContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.live_example")?.appendingPathComponent("test-img"),
+                       let uiImage = UIImage(contentsOfFile: imageContainer.path())
+                    {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .frame(width: 53, height: 53)
+                            .cornerRadius(13)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(.white.opacity(0.15), lineWidth: 1)
+                            )
+                    } else {
+                        Text("Leading")
+                    }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     Text("Trailing")

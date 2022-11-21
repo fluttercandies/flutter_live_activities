@@ -13,7 +13,7 @@ English | [中文说明](README-ZH.md)
 
 > This plugin requires notification permission
 
-<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200>
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/pre2.gif" width=200><img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/img.png" width=200>
 
 #### 1. Add a Widget to the iOS project
 
@@ -159,7 +159,11 @@ if(_activityId != null) {
 }
 ```
 
-> The updated dynamic data for both ActivityKit updates and remote push notification updates can’t exceed 4KB in size.
+> The updated dynamic data for both ActivityKit updates and remote push notification updates can’t exceed 4KB in size.  [doc](https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities)
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/4k.png" height=300>
+
+> For more solutions, please refer to [live_activities](https://pub.dev/packages/live_activities)
 
 * End a Live Activity
 ```dart
@@ -259,4 +263,55 @@ struct live_activity_testLiveActivity: Widget {
 _subscription ??= _liveActivities.uriStream().listen((String? uri) {
     dev.log('deeplink uri: $uri');
 });
+```
+
+#### 6. Display image
+
+> Due to block size limitations. We can't send metadata to LiveActivities  
+
+> LiveActivities does not support async loading, so we can't use AsyncImage or read local file
+
+> Solution from Developer Forums: [716902](https://developer.apple.com/forums/thread/716902)
+
+* Add group config (Paid account required)
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/group.png" height=300>
+
+* Add group id both Runner and Widget
+
+<img src="https://raw.githubusercontent.com/xSILENCEx/project_images/main/flutter_live_activities/groupId.png" height=300>
+
+* Send image to group:
+
+Dart code:
+```dart
+Future<void> _sendImageToGroup() async {
+    const String url = 'https://cdn.iconscout.com/icon/free/png-256/flutter-2752187-2285004.png';
+
+    final String? path = await ImageHelper.getFilePathFromUrl(url);
+
+    if (path != null) {
+        _liveActivities.sendImageToGroup(
+            id: 'test-img',
+            filePath: path,
+            groupId: 'group.live_example',
+        );
+    }
+}
+```
+
+Swift code:
+```swift
+DynamicIslandExpandedRegion(.leading) {
+    if let imageContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.live_example")?.appendingPathComponent("test-img"), /// Use id here
+        let uiImage = UIImage(contentsOfFile: imageContainer.path())
+    {
+        Image(uiImage: uiImage)
+            .resizable()
+            .frame(width: 53, height: 53)
+            .cornerRadius(13)
+    } else {
+        Text("Leading")
+    }
+}
 ```

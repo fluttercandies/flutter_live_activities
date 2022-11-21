@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_live_activities/flutter_live_activities.dart';
+import 'package:flutter_live_activities_example/helper/image_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,6 +72,54 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future<void> _checkEnabled() async {
+    _enabled = await _liveActivities.areActivitiesEnabled();
+    setState(() {});
+  }
+
+  Future<void> _getAllActivities() async {
+    _setInfo((await _liveActivities.getAllActivities()).toString());
+  }
+
+  Future<void> _endAllActivities() async {
+    await _liveActivities.endAllActivities();
+  }
+
+  Future<void> _createActivity() async {
+    _initStream();
+
+    _activityId = await _liveActivities
+        .createActivity(<String, String>{'text': 'Hello World'});
+
+    setState(() {});
+  }
+
+  Future<void> _updateActivity() async {
+    _liveActivities.updateActivity(
+        _activityId!, <String, String>{'text': 'Update Hello World'});
+  }
+
+  Future<void> _endActivity() async {
+    _cancelStream();
+    _liveActivities.endActivity(_activityId!);
+    _activityId = null;
+    _setInfo('');
+  }
+
+  Future<void> _sendImageToGroup() async {
+    const String url =
+        'https://cdn.iconscout.com/icon/free/png-256/flutter-2752187-2285004.png';
+    final String? path = await ImageHelper.getFilePathFromUrl(url);
+
+    if (path != null) {
+      _liveActivities.sendImageToGroup(
+        id: 'test-img',
+        filePath: path,
+        groupId: 'group.live_example',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,54 +132,33 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Info: $_info',
-                textAlign: TextAlign.center,
-              ),
+              Text('Info: $_info', textAlign: TextAlign.center),
               ElevatedButton(
-                onPressed: () async {
-                  _enabled = await _liveActivities.areActivitiesEnabled();
-                  setState(() {});
-                },
+                onPressed: _checkEnabled,
                 child: Text('Enabled: $_enabled'),
               ),
               if (_enabled == true)
                 ElevatedButton(
-                  onPressed: () async {
-                    _setInfo((await _liveActivities.getAllActivities()).toString());
-                  },
+                  onPressed: _getAllActivities,
                   child: const Text('getAllActivities'),
                 ),
               if (_enabled == true)
                 ElevatedButton(
-                  onPressed: () async {
-                    await _liveActivities.endAllActivities();
-                  },
-                  child: const Text('endAllActivities'),
-                ),
-              if (_enabled == true)
-                ElevatedButton(
-                  onPressed: () async {
-                    _setInfo((await _liveActivities.getInitUri()).toString());
-                  },
+                  onPressed: _getInitUri,
                   child: const Text('getInitUri'),
                 ),
+              ElevatedButton(
+                onPressed: _sendImageToGroup,
+                child: const Text('Send image to group'),
+              ),
               if (_enabled == true && _activityId == null)
                 ElevatedButton(
-                  onPressed: () async {
-                    _initStream();
-
-                    _activityId = await _liveActivities.createActivity(<String, String>{'text': 'Hello World'});
-
-                    setState(() {});
-                  },
+                  onPressed: _createActivity,
                   child: const Text('Create live activity'),
                 ),
               if (_activityId != null)
                 ElevatedButton(
-                  onPressed: () {
-                    _liveActivities.updateActivity(_activityId!, <String, String>{'text': 'Update Hello World'});
-                  },
+                  onPressed: _updateActivity,
                   child: Text(
                     'Update live activity $_activityId',
                     textAlign: TextAlign.center,
@@ -138,17 +166,16 @@ class _HomeState extends State<Home> {
                 ),
               if (_activityId != null)
                 ElevatedButton(
-                  onPressed: () {
-                    _cancelStream();
-                    _liveActivities.endActivity(_activityId!);
-                    _activityId = null;
-                    _info = '';
-                    setState(() {});
-                  },
+                  onPressed: _endActivity,
                   child: Text(
                     'End live activity $_activityId',
                     textAlign: TextAlign.center,
                   ),
+                ),
+              if (_enabled == true)
+                ElevatedButton(
+                  onPressed: _endAllActivities,
+                  child: const Text('endAllActivities'),
                 ),
             ],
           ),

@@ -6,8 +6,10 @@ import 'src/live_activities_status.dart';
 /// An implementation of [FlutterLiveActivitiesPlatform] that uses method channels.
 class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   /// The method channel used to interact with the native platform.
-  final MethodChannel _methodChannel = const MethodChannel('flutter_live_activities');
-  final EventChannel _eventChannel = const EventChannel('flutter_live_activities/event');
+  final MethodChannel _methodChannel =
+      const MethodChannel('flutter_live_activities');
+  final EventChannel _eventChannel =
+      const EventChannel('flutter_live_activities/event');
 
   @override
   void init(String urlScheme) {
@@ -19,7 +21,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<Uri?> getInitUri() async {
     try {
-      return Uri.tryParse(await _methodChannel.invokeMethod<String?>('getInitUri') ?? '');
+      return Uri.tryParse(
+          await _methodChannel.invokeMethod<String?>('getInitUri') ?? '');
     } catch (e) {
       return null;
     }
@@ -28,7 +31,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<List<String>> getAllActivities() async {
     try {
-      final String? data = await _methodChannel.invokeMethod<String>('getAllActivities');
+      final String? data =
+          await _methodChannel.invokeMethod<String>('getAllActivities');
       if (data == null) return <String>[];
       return data.split(',');
     } catch (e) {
@@ -38,19 +42,21 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
 
   @override
   Future<String?> createActivity(Map<String, String> data) async {
-    return _methodChannel.invokeMethod<String>('createActivity', <String, dynamic>{'data': data});
+    return _methodChannel.invokeMethod<String>(
+        'createActivity', <String, dynamic>{'data': data});
   }
 
   @override
   Future<bool> updateActivity(String liveId, Map<String, String> data) async {
-    return await _methodChannel
-            .invokeMethod<bool>('updateActivity', <String, dynamic>{'liveId': liveId, 'data': data}) ??
+    return await _methodChannel.invokeMethod<bool>('updateActivity',
+            <String, dynamic>{'liveId': liveId, 'data': data}) ??
         false;
   }
 
   @override
   Future<bool> endActivity(String liveId) async {
-    return await _methodChannel.invokeMethod<bool>('endActivity', <String, String>{
+    return await _methodChannel
+            .invokeMethod<bool>('endActivity', <String, String>{
           'liveId': liveId,
         }) ??
         false;
@@ -59,7 +65,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<LiveActivitiesState> getActivityState(String liveId) async {
     try {
-      final int? data = await _methodChannel.invokeMethod<int>('getActivityState', <String, String>{
+      final int? data = await _methodChannel
+          .invokeMethod<int>('getActivityState', <String, String>{
         'liveId': liveId,
       });
 
@@ -77,7 +84,9 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   @override
   Future<bool> areActivitiesEnabled() async {
     try {
-      return (await _methodChannel.invokeMethod<bool>('areActivitiesEnabled')) ?? false;
+      return (await _methodChannel
+              .invokeMethod<bool>('areActivitiesEnabled')) ??
+          false;
     } catch (e) {
       return false;
     }
@@ -96,7 +105,8 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
     required String filePath,
     required String groupId,
   }) async {
-    return await _methodChannel.invokeMethod<bool>('sendImageToGroup', <String, String>{
+    return await _methodChannel
+            .invokeMethod<bool>('sendImageToGroup', <String, String>{
           'id': id,
           'filePath': filePath,
           'groupId': groupId,
