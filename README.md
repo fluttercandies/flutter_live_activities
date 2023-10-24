@@ -152,6 +152,14 @@ await _liveActivities.getInitUri()
 _activityId = await _liveActivities.createActivity(<String, String>{'text': 'Hello World'});
 ```
 
+* To dismiss the live activity when app terminated
+```dart
+_activityId = await _liveActivities.createActivity(
+      <String, String>{'text': 'Hello World'}
+      removeWhenAppIsKilled: true,
+    );
+```
+
 * Update a Live Activity
 ```dart
 if(_activityId != null) {
