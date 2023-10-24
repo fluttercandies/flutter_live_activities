@@ -37,7 +37,10 @@ abstract class FlutterLiveActivitiesPlatform extends PlatformInterface {
     throw UnimplementedError('getAllActivities() has not been implemented.');
   }
 
-  Future<String?> createActivity(Map<String, String> data) {
+  Future<String?> createActivity(
+    Map<String, String> data, {
+    bool removeWhenAppIsKilled = false,
+  }) {
     throw UnimplementedError('createActivity() has not been implemented.');
   }
 
