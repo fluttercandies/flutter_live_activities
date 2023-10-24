@@ -7,6 +7,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     private var urlScheme: String?
     
     private var initialUrl: URL?
+    private var removeWhenAppIsKilled: Bool = false
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_live_activities", binaryMessenger: registrar.messenger())
@@ -37,7 +38,8 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
                     return
                 }
                 if let data = args["data"] as? [String: String] {
-                    createActivity(data: data, result: result)
+                    removeWhenAppIsKilled = args["removeWhenAppIsKilled"] as? Bool ?? false
+                    createActivity(data: data,removeWhenAppIsKilled:removeWhenAppIsKilled, result: result)
                 } else {
                     result(FlutterError(code: "DATA_ERROR", message: "'data' is invalid", details: nil))
                 }
@@ -98,7 +100,7 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
     }
     
     @available(iOS 16.1, *)
-    func createActivity(data: [String: String], result: @escaping FlutterResult) {
+    func createActivity(data: [String: String],removeWhenAppIsKilled: Bool, result: @escaping FlutterResult) {
         let attributes = FlutterLiveActivities()
         let contentState = FlutterLiveActivities.LiveData(data: data)
         
@@ -270,4 +272,16 @@ public class SwiftFlutterLiveActivitiesPlugin: NSObject, FlutterPlugin, FlutterS
         
         return urlScheme == components?.scheme
     }
+
+    public func applicationWillTerminate(_ application: UIApplication) {
+    if #available(iOS 16.1, *) {
+        if(removeWhenAppIsKilled){
+            Task {
+                for activity in Activity<FlutterLiveActivities>.activities {
+                    await activity.end(dismissalPolicy: .immediate)
+                }
+            }
+        }
+    }
+}
 }
