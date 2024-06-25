@@ -41,9 +41,15 @@ class MethodChannelFlutterLiveActivities extends FlutterLiveActivitiesPlatform {
   }
 
   @override
-  Future<String?> createActivity(Map<String, String> data) async {
-    return _methodChannel.invokeMethod<String>(
-        'createActivity', <String, dynamic>{'data': data});
+  Future<String?> createActivity(
+    Map<String, String> data, {
+    bool removeWhenAppIsKilled = false,
+  }) async {
+    return _methodChannel
+        .invokeMethod<String>('createActivity', <String, dynamic>{
+      'data': data,
+      'removeWhenAppIsKilled': removeWhenAppIsKilled,
+    });
   }
 
   @override

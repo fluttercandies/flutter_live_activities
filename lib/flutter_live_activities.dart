@@ -32,10 +32,16 @@ class FlutterLiveActivities {
   /// When the activity is created, an activity id is returned.
   /// Data is a map of key/value pairs that will be transmitted to your iOS extension widget.
   /// Map is limited to String keys and values for now.
-  Future<String?> createActivity(Map<String, String> data) async {
+  Future<String?> createActivity(
+    Map<String, String> data, {
+    bool removeWhenAppIsKilled = false,
+  }) async {
     if (_isAndroid) return null;
 
-    return FlutterLiveActivitiesPlatform.instance.createActivity(data);
+    return FlutterLiveActivitiesPlatform.instance.createActivity(
+      data,
+      removeWhenAppIsKilled: removeWhenAppIsKilled,
+    );
   }
 
   /// Update an iOS 16.1+ live activity.
